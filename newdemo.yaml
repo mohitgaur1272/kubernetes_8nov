@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newdemodeployment
+spec:
+  selector:
+    matchLabels:
+      app: newdemo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: newdemo
+    spec:
+      containers:
+      - name: newdemocontainer
+        image: mohitgaur1272/newdemo:latest
+        ports:
+        - containerPort: 80
+        resources:
+         limits:
+           cpu: 100m
+         requests:
+           cpu: 50m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: newdemosvc
+spec:
+  selector:
+    app: newdemo
+  ports:
+  - port: 80
+    targetPort: 80
+---
